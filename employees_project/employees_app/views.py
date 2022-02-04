@@ -14,6 +14,8 @@ from random import randint
 #     )
 from django.urls import reverse_lazy
 
+from employees_project.employees_app.models import Department, Employee
+
 
 def home(request):
     print(reverse_lazy('index'))
@@ -42,4 +44,19 @@ def department_details(request, id):
 
 
 def departments_list(request):
-    return HttpResponse("This is list of departments.")
+    #  create a new department:
+    department = Department(name=f'Department {randint(1, 1234)}')
+    department.save()
+    # or:
+    # Department.objects.create(name=f'Department {randint(1, 1234)}')
+
+    context = {
+        # 'departments': Department.objects.all(),                      # generate n + 1 queries
+        'departments': Department.objects.prefetch_related('employee_set').all(),
+        # 'departments': Department.objects.filter(name='Marketing'),
+        # 'departments': Department.objects.filter(name__endswith='app'),
+        'employees': Employee.objects.all()
+
+
+    }
+    return render(request, 'departments_list.html', context)
