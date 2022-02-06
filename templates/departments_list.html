@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>List of departments</h1>
+<ul>
+    {% for d in departments %}
+        <li>
+            {{ d.name }}
+            <ul>
+                {% for e in d.employee_set.all %}
+                    <li>{{ e.first_name }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+<hr>
+    {% for e in employees %}
+        <li>
+            {{ e.first_name }} ({{ e.department.name }})
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
