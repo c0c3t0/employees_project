@@ -31,7 +31,7 @@ def home(request):
 
 
 def go_to_home(request):
-    return redirect('department details', id=randint(1, 1024))
+    return redirect('index',)
 
 
 def not_found(request):
